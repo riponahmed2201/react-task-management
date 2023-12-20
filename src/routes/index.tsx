@@ -1,19 +1,16 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import Home from '../pages/home';
+
 import PrivateRoutes from './private';
 import PublicRoutes from './public';
 import NotFound from '../pages/not-found';
-import { useSelector } from 'react-redux';
-import AdminDashboard from '../pages/dashboard';
-import Login from '../pages/login/Login';
+
+import Login from '../pages/login';
+import DashboardPage from '../pages/dashboard';
+import AddTaskPage from '../pages/task/add';
+import EditTaskPage from '../pages/task/edit';
 
 function AllRoutes() {
-
-    const { name } = useSelector((state: any) => state.authSlice);
-
-    console.log(name);
-
 
     return (
         <BrowserRouter>
@@ -27,20 +24,29 @@ function AllRoutes() {
                         </PublicRoutes>
                     }
                 />
-                {/* <Route
-                    path="/"
-                    element={
-                        <PublicRoutes>
-                            <Home />
-                        </PublicRoutes>
-                    }
-                /> */}
 
                 <Route
-                    path="/admin/dashboard"
+                    path="/dashboard"
                     element={
                         <PrivateRoutes>
-                            <AdminDashboard />
+                            <DashboardPage />
+                        </PrivateRoutes>
+                    }
+                />
+
+                <Route
+                    path="/add-task"
+                    element={
+                        <PrivateRoutes>
+                            <AddTaskPage />
+                        </PrivateRoutes>
+                    }
+                />
+                <Route
+                    path="/edit-task/:id"
+                    element={
+                        <PrivateRoutes>
+                            <EditTaskPage />
                         </PrivateRoutes>
                     }
                 />

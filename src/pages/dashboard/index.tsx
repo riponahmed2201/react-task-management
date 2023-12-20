@@ -1,13 +1,21 @@
 import React from 'react'
-import { logout } from '../../utils/logout'
+import Layout from '../../components/layout'
+import Dashboard from '../../components/dashboard'
 
-function AdminDashboard() {
+function DashboardPage() {
     return (
-        <div>AdminDashboard
-
-            <button onClick={() => logout()}>Logout</button>
-        </div>
+        <Layout >
+            <div className="dashboard h-screen">
+                <div className='container mx-auto p-5'>
+                    <div className='grid grid-cols-3 gap-4'>
+                        <Dashboard />
+                        <Dashboard />
+                        <Dashboard />
+                    </div>
+                </div>
+            </div>
+        </Layout>
     )
 }
 
-export default AdminDashboard 
+export default DashboardPage 
