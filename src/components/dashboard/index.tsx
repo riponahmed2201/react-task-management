@@ -3,31 +3,29 @@ import { Link } from 'react-router-dom'
 
 function Dashboard() {
     return (
-        <div>
-            <div className="rounded overflow-hidden shadow-lg">
-                <div className="px-6 py-4">
-                    <div className="font-bold text-xl mb-2">
-                        <h3>Task Name</h3>
+        <div className="p-4 sm:ml-64">
+            <div className="p-4 rounded-lg dark:border-gray-700">
+                <div className="grid grid-cols-3 gap-4 mb-4">
+
+                    <div className="flex items-center justify-center h-24 rounded bg-gray-50 dark:bg-rose-600">
+                        <p className="text-2xl text-white">
+                            Total Task
+                        </p>
                     </div>
-                    <div className="font-bold text-md mb-2">
-                        <h4>Project Name</h4>
+
+                    <div className="flex items-center justify-center h-24 rounded bg-gray-50 dark:bg-amber-600">
+                        <p className="text-2xl text-white">
+                            Total User
+                        </p>
                     </div>
-                    <p className="text-gray-700 text-base">
-                        Team Name
-                    </p>
-                    <p className="text-gray-700 text-base">
-                        Start Date
-                    </p>
-                    <p className="text-gray-700 text-base">
-                        End Date
-                    </p>
-                    <p className="text-gray-700 text-base">
-                        Task Description
-                    </p>
-                </div>
-                <div className="px-6 pt-4 pb-2">
-                    <Link to="/task/edit"> <span className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">Edit</span></Link>
-                    <button><span className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-red-700 mr-2 mb-2">Delete</span></button>
+
+                    <div className="flex items-center justify-center h-24 rounded bg-gray-50 dark:bg-green-600">
+                        <p className="text-2xl text-white">
+                            <svg className="w-3.5 h-3.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
+                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 1v16M1 9h16" />
+                            </svg>
+                        </p>
+                    </div>
                 </div>
             </div>
         </div>

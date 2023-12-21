@@ -1,36 +1,57 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { useDispatch } from 'react-redux';
-import { login } from '../../store/slices/authSlice';
 import { useNavigate } from 'react-router-dom';
 import { Controller, useForm } from 'react-hook-form';
+import { toast } from "react-toastify";
+
+import { loginApi } from '../../api/authentication';
+import { login } from '../../store/slices/authSlice';
+import { LoginDto } from '../../dto/login';
+import ErrorMessage from '../../components/error-message';
 
 function Login() {
+
+    const [loading, setLoading] = useState<boolean>(false);
+    const [getError, setError] = useState<any>(undefined);
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
     const { control, handleSubmit } = useForm();
 
-    const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6OTM0MzgsIm5hbWUiOiJNaWx0b24iLCJlbWFpbCI6Im1pbHRvbi51aWduQGdtYWlsLmNvbSIsInBob25lX251bWJlciI6bnVsbCwiaXNfYWN0aXZlIjp0cnVlLCJpc19zdGFmZiI6dHJ1ZSwicHJvZmlsZV92ZXJpZmllZCI6ZmFsc2UsInVzZXJfdHlwZSI6NCwiam9iX3NlZWtlcl9pZCI6IkUzTlRTWVFaQ00iLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwicGhvbmVfdmVyaWZpZWQiOmZhbHNlLCJwYWNrYWdlX2V4cGlyZWRfYXQiOm51bGwsImlhdCI6MTcwMjg5NzkwOCwiZXhwIjoxNzAzNTAyNzA4fQ.TiL7YATAc4miPq5zWm4qRFXDTaN6O-0n5hHTRfSwSEo';
+    // Login submit handler
+    const onSubmit: any = async (data: LoginDto) => {
 
-    const onSubmit = async (data: any) => {
-        console.log("Data: ", data);
+        if (data && data?.email && data?.password) {
+            try {
+                setLoading(true);
+                await loginApi({ email: data?.email, password: data?.password })
+                    .then((res: any) => res.json())
+                    .then((res: any) => {
+                        if (res?.statusCode === 200) {
 
-        try {
-            //   const { data } = await axios.post(
-            //     `${base_url}/api/auth/user/login`,
-            //     state
-            //   );
+                            setLoading(true);
+                            setError("");
 
-            //   console.log(data);
-            dispatch(login(token));
+                            dispatch(login(res?.token));
 
-            navigate("/dashboard")
+                            toast.success(res?.message);
 
-        } catch (error) {
-            console.log(error);
+                            navigate("/dashboard");
+
+                        } else if (res?.statusCode === 400) {
+                            setLoading(false);
+                        } else if (res?.statusCode === 500) {
+                            setLoading(false);
+                            setError(res?.message);
+                        }
+                    });
+            } catch (e: any) {
+                console.error(e);
+            }
         }
     };
+
 
     return (
         <div className="flex justify-center items-center w-screen h-screen">
@@ -57,7 +78,6 @@ function Login() {
                                     />
                                 )}
                             />
-
                         </div>
 
                         <div className="flex flex-col w-full gap-1 mb-3">
@@ -78,11 +98,15 @@ function Login() {
                             />
                         </div>
 
+                        {getError !== "" && <ErrorMessage message={getError} />}
+
                         <button className="bg-indigo-500 w-full hover:bg-indigo-600 text-white rounded-md px-7 py-[6px] text-md">
-                            Login
+                            {loading ? (
+                                <span className="loading-spinner inline-block">Please wait...</span>
+                            ) : 'Login'}
                         </button>
 
-                        <div className="w-full gap-1 mt-5">
+                        <div className="w-full gap-1 mt-5 text-center">
                             Don't have account? Please{" "}
                             <a
                                 href="/register"

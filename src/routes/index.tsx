@@ -9,6 +9,7 @@ import Login from '../pages/login';
 import DashboardPage from '../pages/dashboard';
 import AddTaskPage from '../pages/task/add';
 import EditTaskPage from '../pages/task/edit';
+import TaskPage from '../pages/task';
 
 function AllRoutes() {
 
@@ -30,6 +31,15 @@ function AllRoutes() {
                     element={
                         <PrivateRoutes>
                             <DashboardPage />
+                        </PrivateRoutes>
+                    }
+                />
+
+                <Route
+                    path="/tasks"
+                    element={
+                        <PrivateRoutes>
+                            <TaskPage />
                         </PrivateRoutes>
                     }
                 />
